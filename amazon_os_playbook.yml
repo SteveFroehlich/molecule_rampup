@@ -1,0 +1,152 @@
+# TODO ec2 is deprecated swith to ec2_instance
+# https://docs.ansible.com/ansible/latest/modules/ec2_instance_module.html
+#
+# AWS details from ec2 console
+# ec2 ansible module docs: 
+# https://docs.ansible.com/ansible/latest/modules/ec2_module.html
+---
+- hosts: ci.server.amazon.linux
+  gather_facts: no
+  tasks:
+    # need to run against the AWS host. Not localhost!
+    - name: "setup tools"
+      block:
+        - name: "update yum"
+          command: "sudo yum update -y"
+        - name: "setup tools"
+          command: "sudo yum install tree -y"
+      tags:
+         - setup-tools
+
+
+    - name: "setup docker"
+      block:
+        - name: "install docker"
+          command: "sudo amazon-linux-extras install docker -y"
+
+        - name: "start the docker service"
+          command: "sudo service docker start"
+
+        - name: "run docker hello world"
+          command: "sudo docker run hello-world"
+
+      tags:
+        - setup-docker
+        # for more see: https://www.rodolfo.io/2019/05/how-to-install-docker-on-amazon-linux-2/
+        # possible course: https://docker-curriculum.com/
+
+
+    - name: "setup python"
+      block:
+      - name: "install py3"
+        command: "sudo yum -y install python3"
+      tags:
+        - setup-python
+
+
+    - name: "setup molecule"
+      block:
+      - name: "pip install molecule"
+        command: "sudo python3 -m pip install molecule"
+
+      - name: "pip install selinux"
+        command: "sudo python3 -m pip install selinux"
+
+      - name: "install docker py module"
+        shell: "sudo python3 -m pip install docker"
+
+      - name: "check molecule version"
+        shell: "molecule --version"
+
+      # molecule needs the docker module to be installed
+      # source: https://docs.docker.com/engine/install/linux-postinstall/
+      - name: "allow docker to run as non root [add user]"
+        shell: "sudo usermod -aG docker $USER"
+      - name: "allow docker to run as non root [restart processes to take affect]"
+        shell: "sudo newgrp docker &"
+      - name: "exit from new user group"
+        shell: "exit"
+      - name: "pause for 1 minute to allow log in/out to enable the new docker group"
+        pause:
+          minutes: 1
+      vars:
+        ansible_python_interpreter: "/usr/bin/python3"
+      tags:
+        - setup-molecule
+
+
+    # https://molecule.readthedocs.io/en/latest/getting-started.html#run-test-sequence-commands
+    - name: "run molecule hello world"
+      block:
+      - name: "copy role under test to the server"
+        unarchive:
+          src: "{{ role_under_test }}.tar.gz"
+          dest: ~/
+
+      - name: "run molecule linters"
+        shell:
+          cmd: "molecule lint"
+          chdir: "{{ role_under_test }}"
+
+      - name: "run create"
+        shell:
+          cmd: "molecule create"
+          chdir: "{{ role_under_test }}"
+
+      # molecule list [to view the instance status]
+
+      - name: "run molecule converge"
+        shell:
+          cmd: "molecule converge"
+          chdir: "{{ role_under_test }}"
+
+      # molecule login [to poke around instance]
+
+      - name: "tear down"
+        shell: 
+          cmd: "molecule destroy"
+          chdir: "{{ role_under_test }}"
+      tags:
+        - molecule-hello-world
+
+
+    - name: "run molecule full test"
+      shell: 
+        cmd: "molecule test"
+        chdir: "{{ role_under_test }}"
+      vars:
+        ansible_python_interpreter: "/usr/bin/python3"
+      tags:
+        - molecule-test
+
+
+    - name: "install and run custom yamllint"
+      block:
+      - name: "install yamllint"
+        shell: "sudo python3 -m pip install yamllint"
+
+      - name: "check yamlling installation"
+        shell: "yamllint --version"
+
+      - name: "configure yamllint and run for the test suite"
+        shell: "yamllint -c {{ role_under_test }}/.yamllint {{ role_under_test }}"
+      vars:
+        ansible_python_interpreter: "/usr/bin/python3"
+      tags:
+        - yamllint
+
+
+    - name: "install and run custom ansible-lint"
+      block:
+      - name: "install ansible-lint"
+        shell: "sudo python3 -m pip install ansible-lint"
+
+      - name: "check ansible-lint installation"
+        shell: "ansible-lint --version"
+
+      - name: "configure ansible-lint and run for the test suite"
+        shell: "ansible-lint -c {{ role_under_test }}/.ansible-lint {{ role_under_test }}/tests/test.yml"
+      vars:
+        ansible_python_interpreter: "/usr/bin/python3"
+      tags:
+        - ansible-lint

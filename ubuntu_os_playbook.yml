@@ -1,0 +1,22 @@
+---
+# not tested
+- hosts: ci.server.amazon.linux
+  gather_facts: no
+  tasks:
+    # get pip installed ubuntu
+    - name: "install pip"
+      block:
+      # maybe update: sudo apt-get update && sudo apt-get -y upgrade
+      - name: "install distutils"
+        command: "sudo apt-get install python3-distutils --reinstall -y"
+
+      - name: "get pip installer from the web"
+        command: "curl -O https://bootstrap.pypa.io/get-pip.py"
+
+      - name: "install pip"
+        command: "python3 get-pip.py"
+      vars:
+        ansible_user: "ubuntu"
+      tags:
+        - setup-ubuntu
+
