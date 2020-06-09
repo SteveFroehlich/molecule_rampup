@@ -84,7 +84,7 @@ Lastly if you want to see the test fail add
     assert:
       that: False
 ```
-to `verify.yml`
+to `verify.yml`. To view a full solution see `test_role_sol_1.tar.gz`.
 
 ## Exercise 2 Web App
 Now that we can test our role, lets update the role to have it do 
@@ -152,9 +152,8 @@ ansible-playbook -i hosts amazon_os_playbook.yml --tags molecule-test -e ansible
 ```
 
 If you want to check your changes against a tested solution you can 
-```
-git checkout 
-```
+unarchive `test_role_sol_2.tar.gz`.
+
 # Concepts
 Any existing ansible role can be tested by molecule by adding a molecule scenario.
 A molecule scenario is a directory in the molecule directory (in this case 
