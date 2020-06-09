@@ -65,7 +65,7 @@ add the below to test_role/molecule/default/verify.yml.
 
   - name: Example assertion
     assert:
-      that: files_to_delete.stat.exists
+      that: file_details.stat.exists
 ```
 
 Once the files on the remote box are updated you can run the full test:
