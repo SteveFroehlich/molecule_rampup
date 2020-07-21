@@ -1,0 +1,20 @@
+name: hello world test
+
+on:
+  push:
+    branches:
+      - action_test
+
+
+jobs:
+  run_test:
+    name: run a simple test
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        distro:
+          - centos8
+
+    steps:
+      - name: Echo a message
+        run: echo 'Hi. This is a test'
