@@ -16,5 +16,8 @@ jobs:
           - centos8
 
     steps:
+      - name: Check out the codebase.
+        uses: actions/checkout@v2
+
       - name: Echo a message
         run: echo 'Hi. This is a test'
