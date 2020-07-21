@@ -1,4 +1,4 @@
-name: hello world test
+name: run a molecule test
 
 on:
   push:
@@ -16,8 +16,11 @@ jobs:
           - centos8
 
     steps:
-      - name: Check out the codebase.
+      - name: Check out the code
         uses: actions/checkout@v2
 
-      - name: Echo a message
-        run: echo 'Hi. This is a test'
+      - name: setup environment
+        run: pip3 install yamllint ansible-lint docker molecule
+
+      - name: run molecule
+        run: cd files/test_role; molecule test
