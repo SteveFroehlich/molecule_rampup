@@ -1,0 +1,29 @@
+---
+# This is an example playbook to execute Ansible tests.
+
+- name: Verify
+  hosts: all
+  tasks:
+    - name: verify the cluster is healthy
+      uri:
+        url: http://localhost:9200/_cat/health
+        status_code: 200
+        return_content: yes
+      register: this
+      failed_when: "'green' not in this.content"
+
+    - name: add some data to elastic search
+      uri:
+        url: http://localhost:9200/testindex/_create/1
+        method: PUT
+        body_format: json
+        body:
+          hello: world
+        status_code: 201
+
+    - name: verify data is added
+      uri:
+        url: http://localhost:9200/testindex/_doc/1
+        return_content: yes
+      register: this
+      failed_when: "'world' not in this.content"

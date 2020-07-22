@@ -1,0 +1,37 @@
+
+- name: Download elastic search
+  get_url:
+    url: "https://artifacts.elastic.co/downloads/elasticsearch/{{ es_version }}-linux-x86_64.tar.gz"
+    dest: /tmp/{{ es_version }}.tar.gz
+
+- name: "expand the elastic search archive"
+  unarchive:
+    src: "/tmp/{{ es_version }}.tar.gz"
+    dest: "/tmp"
+    remote_src: yes
+
+- name: start node one
+  shell: "cd {{ es_dir }}/bin && nohup ./elasticsearch -Epath.data=/tmp/data1 -Epath.logs=/tmp/log1 > /tmp/node1.out &"
+
+- name: wait for node one to be started
+  wait_for:
+    path: /tmp/node1.out
+    search_regex: started
+    timeout: 25 # seconds
+
+- name: start node two
+  shell: "cd {{ es_dir }}/bin && nohup ./elasticsearch -Epath.data=/tmp/data2 -Epath.logs=/tmp/log2 > /tmp/node2.out &"
+
+- name: wait for node two to be started
+  wait_for:
+    path: /tmp/node2.out
+    search_regex: started
+    timeout: 25 # seconds
+
+- name: check clients can connect
+  uri:
+    url: http://localhost:9200
+    status_code: 200
+    return_content: yes
+  register: this
+  failed_when: "'elasticsearch' not in this.content"

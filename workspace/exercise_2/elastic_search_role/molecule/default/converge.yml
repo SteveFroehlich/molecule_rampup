@@ -1,0 +1,15 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: add non root user
+      user:
+        name: esuser
+        state: present
+
+    - name: "Include test role"
+      include_role:
+        name: "elastic_search_role"
+      vars:
+        ansible_user: esuser
+
