@@ -21,6 +21,6 @@ echo ''
 
 cd ../../ec2_setup/
 # echo 'running: ansible-playbook -i hosts amazon_os_playbook.yml --tags molecule-test -e ansible_host='$SERVER' -e molecule_cmd=converge -e role_under_test='$ROLE_DIR
-#ansible-playbook -i hosts amazon_os_playbook.yml --tags molecule-test -e ansible_host=$SERVER -e molecule_cmd=converge -e role_under_test=role_under_test=../../$ROLE_DIR
+ansible-playbook -i hosts amazon_os_playbook.yml --tags molecule-test -e ansible_host=$SERVER -e molecule_cmd=converge -e role_under_test=$ROLE_DIR
 
 
