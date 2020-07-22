@@ -3,12 +3,17 @@
 # run the playbook to setup an EC2 instance to be 
 # an automation CI server
 
-PLAYBOOK=$1
-HOST_IP=$2
-
+HOST_IP=$1
 if [ -z ${1+x} ]; then
     echo "\n\nUsage: $ ./setip_ci_server.sh <playbook> <host-ip> [optional]<tags>\n\n"
     exit 1
+fi
+
+
+if [ -z ${2+x} ]; then
+    PLAYBOOK=amazon_os_playbook.yml
+else
+    PLAYBOOK=$2
 fi
 
 if [ -z ${3+x} ]; then
