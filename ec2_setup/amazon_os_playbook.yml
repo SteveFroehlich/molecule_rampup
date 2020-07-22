@@ -26,7 +26,6 @@
         - setup-tools
 
 
-
     - name: "setup docker"
       block:
         - name: "install docker"
@@ -74,6 +73,7 @@
       tags:
         - setup-molecule
 
+
     # https://molecule.readthedocs.io/en/latest/getting-started.html#run-test-sequence-commands
     - name: "run molecule hello world"
       block:
@@ -118,12 +118,3 @@
       tags:
         - molecule-test
 
-
-    - name: "install elastic search role"
-      block:
-      - name: "copy role under test to the server"
-        unarchive:
-          src: "es_zip_role.tar.gz"
-          dest: ~/
-      tags:
-        - elastic
