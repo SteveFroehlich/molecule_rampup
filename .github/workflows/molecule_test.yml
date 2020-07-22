@@ -5,7 +5,6 @@ on:
     branches:
       - test_action
 
-
 jobs:
   run_test:
     name: run a simple test

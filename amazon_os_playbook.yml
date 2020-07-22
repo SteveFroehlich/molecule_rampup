@@ -12,11 +12,19 @@
     - name: "setup tools"
       block:
         - name: "update yum"
-          command: "sudo yum update -y"
+          command: "yum update -y"
         - name: "setup tools"
-          command: "sudo yum install tree -y"
+          yum:
+            name: tree
+            state: latest
+        - name: "install py3"
+          yum:
+            name: python3
+            state: latest
+      become: yes
       tags:
-         - setup-tools
+        - setup-tools
+
 
 
     - name: "setup docker"
@@ -34,14 +42,6 @@
         - setup-docker
         # for more see: https://www.rodolfo.io/2019/05/how-to-install-docker-on-amazon-linux-2/
         # possible course: https://docker-curriculum.com/
-
-
-    - name: "setup python"
-      block:
-      - name: "install py3"
-        command: "sudo yum -y install python3"
-      tags:
-        - setup-python
 
 
     - name: "setup molecule"
@@ -73,7 +73,6 @@
         ansible_python_interpreter: "/usr/bin/python3"
       tags:
         - setup-molecule
-
 
     # https://molecule.readthedocs.io/en/latest/getting-started.html#run-test-sequence-commands
     - name: "run molecule hello world"
@@ -120,33 +119,11 @@
         - molecule-test
 
 
-    - name: "install and run custom yamllint"
+    - name: "install elastic search role"
       block:
-      - name: "install yamllint"
-        shell: "sudo python3 -m pip install yamllint"
-
-      - name: "check yamlling installation"
-        shell: "yamllint --version"
-
-      - name: "configure yamllint and run for the test suite"
-        shell: "yamllint -c {{ role_under_test }}/.yamllint {{ role_under_test }}"
-      vars:
-        ansible_python_interpreter: "/usr/bin/python3"
+      - name: "copy role under test to the server"
+        unarchive:
+          src: "es_zip_role.tar.gz"
+          dest: ~/
       tags:
-        - yamllint
-
-
-    - name: "install and run custom ansible-lint"
-      block:
-      - name: "install ansible-lint"
-        shell: "sudo python3 -m pip install ansible-lint"
-
-      - name: "check ansible-lint installation"
-        shell: "ansible-lint --version"
-
-      - name: "configure ansible-lint and run for the test suite"
-        shell: "ansible-lint -c {{ role_under_test }}/.ansible-lint {{ role_under_test }}/tests/test.yml"
-      vars:
-        ansible_python_interpreter: "/usr/bin/python3"
-      tags:
-        - ansible-lint
+        - elastic

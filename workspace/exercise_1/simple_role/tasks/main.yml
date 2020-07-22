@@ -1,0 +1,5 @@
+- name: Molecule Hello World!
+  copy:
+    src: hello_world.txt
+    dest: /tmp/hello_world.txt
+
