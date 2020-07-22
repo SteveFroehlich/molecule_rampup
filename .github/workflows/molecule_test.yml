@@ -19,6 +19,11 @@ jobs:
       - name: Check out the code
         uses: actions/checkout@v2
 
+      - name: install python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
       - name: setup environment
         run: pip3 install yamllint ansible-lint docker molecule
 
