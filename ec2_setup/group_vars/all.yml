@@ -1,2 +1,2 @@
 role_under_test: test_role
-
+molecule_cmd: "test"

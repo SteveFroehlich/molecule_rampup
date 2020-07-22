@@ -109,9 +109,9 @@
         - molecule-hello-world
 
 
-    - name: "run molecule full test"
-      shell: 
-        cmd: "molecule test"
+    - name: "run molecule test"
+      shell:
+        cmd: "molecule {{ molecule_cmd }}"
         chdir: "{{ role_under_test }}"
       vars:
         ansible_python_interpreter: "/usr/bin/python3"
