@@ -27,4 +27,4 @@ jobs:
         run: pip3 install yamllint ansible-lint docker molecule
 
       - name: run molecule
-        run: cd workspace/exercise_1/simple_role/; molecule test
+        run: cd workspace/exercise_2/elastic_search_role/; molecule converge
