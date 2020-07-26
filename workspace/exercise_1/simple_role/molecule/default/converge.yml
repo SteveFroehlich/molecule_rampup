@@ -1,7 +1,0 @@
----
-- name: Converge
-  hosts: all
-  tasks:
-    - name: "Include test_role"
-      include_role:
-        name: "simple_role"
