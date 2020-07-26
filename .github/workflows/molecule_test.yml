@@ -1,0 +1,30 @@
+name: run a molecule test
+
+on:
+  push:
+    branches:
+      - test_action
+
+jobs:
+  run_test:
+    name: run a simple test
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        distro:
+          - centos8
+
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v2
+
+      - name: install python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: setup environment
+        run: pip3 install yamllint ansible-lint docker molecule
+
+      - name: run molecule
+        run: cd workspace/exercise_2/elastic_search_role/; molecule converge

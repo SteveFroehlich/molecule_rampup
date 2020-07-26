@@ -1,0 +1,4 @@
+---
+# defaults file for test_role
+es_version: elasticsearch-7.8.0
+es_dir: "/tmp/{{ es_version }}"

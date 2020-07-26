@@ -1,0 +1,13 @@
+---
+- hosts: ci.server.amazon.linux
+  gather_facts: no
+  tasks:
+      - name: "copy role under test to the server"
+        unarchive:
+          src: "ansible-elasticsearch.tar.gz"
+          dest: ~/
+
+      - name: run the default scenario
+        command: "molecule test"
+        args:
+          chdir: "~/files/ansible-elasticsearch"

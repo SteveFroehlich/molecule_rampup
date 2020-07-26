@@ -1,0 +1,4 @@
+---
+- hosts: aws
+  roles:
+    - es_zip_role
