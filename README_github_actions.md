@@ -12,8 +12,13 @@ can help you do. For example test a simple role, add additional test
 coverage beyond what the role provides when executing and testing for
 idempotence. 
 
-To start take a look at the exercises under the workspace directory. 
-A good place to start is with the simpliest one [here](workspace/exercise_1/README.md)
+# Exercises
+To start take a look at the exercises under the workspace directory. To submit
+your changes you should first checkout the branch `exercise_1` or `exercise_2`
+depending on which exercise you are doing. Make your changes, commit and push.
+Upon pushing the github action for the exercise should execute.
+* **[Exercise 1: update a file (hello world example)](workspace/exercise_1/README.md)**
+* **[Exercise 2: elastic search](workspace/exercise_2/README.md)**
 
 
 

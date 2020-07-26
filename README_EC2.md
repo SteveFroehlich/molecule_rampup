@@ -75,6 +75,6 @@ are making changes in to the server and run the molecule command against the rol
 So after you make changes and are ready to test, run the script
 (ie `./run_exercise_1_in_ec2.sh`) it should tell you if it was successful or not.
 * **[Exercise 1: update a file (hello world example)](workspace/exercise_1/README.md)**
-* **[Exercise 2: web app](workspace/exercise_2/README.md)**
+* **[Exercise 2: elastic search](workspace/exercise_2/README.md)**
 
 
