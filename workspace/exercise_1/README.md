@@ -20,5 +20,5 @@ Once you made your changes either
 If you have trouble getting it working you can look at the solution.
 By running the below command in this directory
 ```
-git diff exercise_1 solution -- .
+git diff exercise_1 solution -- simple_role/
 ```

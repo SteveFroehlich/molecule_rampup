@@ -26,7 +26,7 @@ Once you made your changes either
 The solution to the suggest verifications can be viewed via
 By running the below command in this directory
 ```
-git diff exercise_2 solution -- .
+git diff exercise_2 solution -- elastic_search_role
 ```
 
 
