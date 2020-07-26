@@ -12,6 +12,11 @@ which copies a file to the target machine. The task is to use molecule
 to test this role can run successfully. Take a look at the [molecule docs](https://molecule.readthedocs.io/en/latest/getting-started.html)
 to see what to add to allow molecule to execute the role.
 
+Once you made your changes either
+1. run the `run_exercise_1_in_ec2.sh` script if you chose the EC2 path
+2. checkout branch exercise_1, commit and push your changes if you 
+   chose the git actions path
+
 If you have trouble getting it working you can look at the solution.
 ```
 git diff exercise-1 exercise-1-solution

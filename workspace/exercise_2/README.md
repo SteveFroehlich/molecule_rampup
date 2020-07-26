@@ -18,6 +18,11 @@ After you have come up with some verifications add them so that
 The reader is encouraged to come up with the elastic verifications
 before looking at the [suggestions](end_point_suggestions.md) 
 
+Once you made your changes either
+1. run the `run_exercise_2_in_ec2.sh` script if you chose the EC2 path
+2. checkout branch exercise_2, commit and push your changes if you 
+   chose the git actions path
+   
 The solution to the suggest verifications can be viewed via
 ```
 git diff exercise-2 exercise-2-solution

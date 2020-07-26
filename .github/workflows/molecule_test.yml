@@ -3,7 +3,8 @@ name: run a molecule test
 on:
   push:
     branches:
-      - test_action
+      - exercise_1
+      - exercise_2
 
 jobs:
   run_test:
@@ -26,5 +27,10 @@ jobs:
       - name: setup environment
         run: pip3 install yamllint ansible-lint docker molecule
 
-      - name: run molecule
+      - name: run molecule converge for exercise 1
+        if: "$${{ github.ref == 'exercise_1' }}"
         run: cd workspace/exercise_2/elastic_search_role/; molecule converge
+
+      - name: run molecule verify for exercise 2
+        if: "$${{ github.ref == 'exercise_2' }}"
+        run: cd workspace/exercise_2/elastic_search_role/; molecule verify
