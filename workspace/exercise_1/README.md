@@ -18,6 +18,7 @@ Once you made your changes either
    chose the git actions path
 
 If you have trouble getting it working you can look at the solution.
+By running the below command in this directory
 ```
-git diff exercise-1 exercise-1-solution
+git diff exercise_1 solution -- .
 ```
