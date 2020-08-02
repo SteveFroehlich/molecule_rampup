@@ -1,7 +1,11 @@
 # Introduction to Molecule 
-This tutorial introduces the reader to molecule, the core concepts 
-and has exercises of increasing complexity. The long term goal is 
-to provide one possible road map to understanding and using molecule. 
+This tutorial show the reader how to do two specific tasks with
+molecule. First is [exercise 1](workspace/exercise_1/README.md)
+which demonstrates how to use molecule to make sure your role will 
+execute and complete successfully. Second is [exercise 2](workspace/exercise_2/README.md)
+which demonstrates how to add additional verifications that test
+your role is doing what it should. This [video](https://youtu.be/iY4nnr-4tM4)
+gives an overview of the exercises.
 
 ## How to work through Examples
 There are two ways to work through the exercises depending on the 
